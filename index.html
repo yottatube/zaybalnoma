@@ -274,5 +274,26 @@ if(location.hash==="#admin")admin=true;
 render();
 loadPublished(false);
 </script>
-</body>
+<style>
+.spark{position:fixed;pointer-events:none;z-index:9999;line-height:1;user-select:none;text-shadow:1px 1px 0 rgba(0,0,0,.55);transform:translate(-50%,-50%);animation:spark .8s ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.3)}}
+</style>
+<script>
+(function(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  var cols=["#ffd400","#ff2d95","#2dd4ff","#4fe34f","#ff9500","#b266ff"],last=0;
+  document.addEventListener("pointermove",function(e){
+    var now=Date.now();if(now-last<35)return;last=now;
+    var s=document.createElement("span");
+    s.className="spark";s.textContent=Math.random()<.5?"★":"✦";
+    s.style.left=e.clientX+"px";s.style.top=e.clientY+"px";
+    s.style.color=cols[Math.floor(Math.random()*cols.length)];
+    s.style.fontSize=(10+Math.random()*10)+"px";
+    s.style.setProperty("--dx",(Math.random()*40-20)+"px");
+    s.style.setProperty("--dy",(10+Math.random()*30)+"px");
+    document.body.appendChild(s);
+    setTimeout(function(){s.remove()},800);
+  });
+})();
+</script></body>
 </html>
