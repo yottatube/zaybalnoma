@@ -1,0 +1,132 @@
+{
+  "site": {
+    "title": "ZAYBALNOMA",
+    "sub": "powered by",
+    "handle": "@badselect",
+    "link": "https://t.me/badselect",
+    "marquee": "*** Xush kelibsiz! ZAYBALNOMA — oy-oy bo‘yicha eng zo‘r zaybal voqealar *** Telegram: @badselect ***",
+    "footer": "Best viewed in Netscape Navigator 4.0 · 800x600"
+  },
+  "months": [
+    {
+      "id": "sentabr",
+      "title": "Sentabr",
+      "items": [
+        {
+          "id": "sentabr-0",
+          "t": "iPhone 18(+Duo)",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "sentabr-1",
+          "t": "Pedofilik",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "sentabr-2",
+          "t": "52K$ Zeekr",
+          "d": "",
+          "img": ""
+        }
+      ]
+    },
+    {
+      "id": "oktyabr",
+      "title": "Oktyabr",
+      "items": [
+        {
+          "id": "oktyabr-0",
+          "t": "Centrum air",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "oktyabr-1",
+          "t": "Mrbeast",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "oktyabr-2",
+          "t": "Brasserie",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "oktyabr-3",
+          "t": "10 minut uxlayman deb 15 minut (Ozodbek Davlatov)",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "oktyabr-4",
+          "t": "Yangi Alifbo",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "oktyabr-5",
+          "t": "ImanInvest",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "oktyabr-6",
+          "t": "Apple pay (google wallet haqida hech kim gapirmadiyam)",
+          "d": "",
+          "img": ""
+        }
+      ]
+    },
+    {
+      "id": "noyabr",
+      "title": "Noyabr",
+      "items": [
+        {
+          "id": "noyabr-0",
+          "t": "Marat (Imarat Development)",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "noyabr-1",
+          "t": "Rasmdagilarni taniysizmi? (Mrbest va Said Ahmad)",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "noyabr-2",
+          "t": "GTA VI",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "noyabr-3",
+          "t": "Kinder",
+          "d": "",
+          "img": ""
+        }
+      ]
+    },
+    {
+      "id": "honor",
+      "title": "Honorable mentions",
+      "items": [
+        {
+          "id": "honor-0",
+          "t": "Z avlod deb kontent oladiganlar",
+          "d": "",
+          "img": ""
+        },
+        {
+          "id": "honor-1",
+          "t": "The Odyssey",
+          "d": "",
+          "img": ""
+        }
+      ]
+    }
+  ]
+}
