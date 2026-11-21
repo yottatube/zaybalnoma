@@ -1,744 +1,243 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>★☆★ ZAYBALNOMA 2026 ★☆★ @badselect</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Comic+Neue:wght@400;700&display=swap');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background: #c0c0c0;
-            color: #000;
-            font-family: 'Comic Neue', 'Comic Sans MS', cursive;
-            min-height: 100vh;
-        }
-
-        /* ── Taskbar top ── */
-        .taskbar {
-            background: #c0c0c0;
-            border-bottom: 2px solid #808080;
-            border-top: 2px solid #fff;
-            padding: 2px 4px;
-            display: flex; align-items: center; gap: 4px;
-        }
-        .start-btn {
-            background: #c0c0c0; border: 2px outset #fff;
-            padding: 2px 10px; font-family: 'Press Start 2P', monospace;
-            font-size: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px;
-        }
-        .start-btn:active { border-style: inset; }
-        .taskbar-title {
-            flex: 1; background: #000080; color: #fff;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 8px; padding: 4px 8px;
-            border: 1px inset #808080;
-            overflow: hidden; white-space: nowrap;
-        }
-        .taskbar-time {
-            border: 2px inset #808080; padding: 3px 8px;
-            font-family: 'Press Start 2P', monospace; font-size: 8px;
-        }
-
-        /* ── Main Desktop ── */
-        .desktop {
-            background: #008080;
-            min-height: calc(100vh - 30px);
-            padding: 16px;
-        }
-
-        /* ── Main Window ── */
-        .main-window {
-            background: #c0c0c0;
-            border: 2px outset #fff;
-            max-width: 900px;
-            margin: 0 auto;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
-        }
-        .win-titlebar {
-            background: linear-gradient(90deg, #000080, #1084d0);
-            color: #fff; padding: 4px 6px;
-            font-family: 'Press Start 2P', monospace; font-size: 10px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .win-buttons { display: flex; gap: 2px; }
-        .win-btn {
-            width: 16px; height: 14px;
-            background: #c0c0c0; border: 2px outset #fff;
-            font-size: 8px; text-align: center; line-height: 10px;
-            cursor: pointer; font-weight: bold;
-        }
-        .win-btn:active { border-style: inset; }
-
-        .win-body { padding: 8px; }
-
-        /* ── Header area inside window ── */
-        .header-area {
-            text-align: center;
-            padding: 16px 10px;
-            border: 2px inset #808080;
-            background: #fff;
-            margin-bottom: 8px;
-        }
-        .header-area h1 {
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(1.2rem, 4vw, 2rem);
-            color: #000080;
-            text-shadow: 2px 2px 0 #c0c0c0;
-            margin-bottom: 8px;
-        }
-        .header-area .powered { font-size: 14px; color: #800080; font-weight: bold; }
-        .header-area .powered a { color: #0000ff; }
-        .header-area .visitor {
-            display: inline-block; margin-top: 8px;
-            background: #000; color: #0f0;
-            font-family: 'Press Start 2P', monospace; font-size: 8px;
-            padding: 3px 10px; border: 2px inset #808080;
-        }
-        .construction { font-size: 10px; color: #ff0000; margin-top: 6px; animation: blink 1s infinite; font-weight: bold; }
-        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
-
-        /* ── Month Section (a Win95 group box) ── */
-        .month-section { margin: 10px 0; }
-
-        .month-groupbox {
-            border: 2px groove #fff;
-            padding: 10px 8px 8px;
-            position: relative;
-            margin-top: 10px;
-        }
-        .month-label {
-            position: absolute;
-            top: -10px; left: 12px;
-            background: #c0c0c0;
-            padding: 0 8px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 11px;
-            color: #000080;
-        }
-        .month-label .emoji { font-size: 14px; }
-
-        /* ── Slider ── */
-        .slider-wrap { position: relative; }
-
-        .slider-track {
-            display: flex; gap: 8px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            padding: 4px 2px 6px;
-        }
-        .slider-track::-webkit-scrollbar { height: 16px; }
-        .slider-track::-webkit-scrollbar-track { background: #c0c0c0; border: 1px solid #808080; }
-        .slider-track::-webkit-scrollbar-thumb { background: linear-gradient(#ddd,#aaa); border: 2px outset #ccc; }
-
-        .slider-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 24px; height: 40px;
-            border: 2px outset #fff; background: #c0c0c0;
-            font-size: 14px; cursor: pointer; z-index: 5;
-            font-family: monospace; font-weight: bold;
-        }
-        .slider-btn:active { border-style: inset; }
-        .slider-btn.left { left: -2px; }
-        .slider-btn.right { right: -2px; }
-
-        /* ── Card = Win95 mini window ── */
-        .card {
-            flex-shrink: 0;
-            width: 230px;
-            scroll-snap-align: start;
-            background: #c0c0c0;
-            border: 2px outset #fff;
-            position: relative;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-        }
-
-        .card-bar {
-            background: linear-gradient(90deg, #000080, #1084d0);
-            color: #fff; padding: 2px 5px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 7px;
-            display: flex; align-items: center; justify-content: space-between;
-            white-space: nowrap; overflow: hidden;
-        }
-        .card-bar-btns { display: flex; gap: 1px; flex-shrink: 0; }
-        .card-bar-btn {
-            width: 12px; height: 11px;
-            background: #c0c0c0; border: 1px outset #fff;
-            font-size: 7px; text-align: center; line-height: 9px;
-        }
-
-        .card-inner {
-            border: 2px inset #808080;
-            margin: 3px;
-        }
-
-        .card-img {
-            width: 100%; height: 130px;
-            background: #fff;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-            border-bottom: 1px solid #808080;
-        }
-        .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-img .ph { font-size: 38px; }
-
-        .card-body { padding: 8px; background: #fff; }
-
-        .card-tag {
-            display: inline-block;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 6px; padding: 2px 5px;
-            margin-bottom: 6px;
-            border: 1px outset;
-        }
-        .t-tech { background: #0000cc; color: #fff; }
-        .t-auto { background: #008000; color: #fff; }
-        .t-food { background: #cc8800; color: #fff; }
-        .t-finance { background: #800080; color: #fff; }
-        .t-culture { background: #cc0066; color: #fff; }
-        .t-gaming { background: #cc0000; color: #fff; }
-        .t-media { background: #4444cc; color: #fff; }
-        .t-misc { background: #555; color: #fff; }
-        .t-film { background: #008888; color: #fff; }
-        .t-brend { background: #885500; color: #fff; }
-
-        .card-title {
-            font-size: 13px; font-weight: bold;
-            color: #000080; margin-bottom: 3px;
-        }
-        .card-desc { font-size: 11px; color: #333; line-height: 1.4; }
-
-        .hot-badge {
-            display: inline-block; background: #f00; color: #fff;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 5px; padding: 1px 3px; margin-left: 4px;
-            animation: blink 0.5s infinite; vertical-align: middle;
-        }
-
-        .fire { animation: fire 0.3s infinite alternate; display: inline-block; }
-        @keyframes fire {
-            0% { text-shadow: 0 0 3px #ff0, 0 -3px 3px #f80, 0 -6px 6px #f00; }
-            100% { text-shadow: 0 0 3px #ff0, 0 -5px 5px #f80, 0 -9px 8px #f00; }
-        }
-
-        /* ── Honor gold groupbox ── */
-        .honor .month-groupbox { border-color: #b8860b; }
-        .honor .month-label { color: #b8860b; }
-        .honor .card-bar { background: linear-gradient(90deg, #b8860b, #ffd700, #b8860b); color: #000; }
-
-        /* ── Admin Toggle ── */
-        .admin-btn {
-            position: fixed; bottom: 14px; right: 14px; z-index: 999;
-            width: 40px; height: 40px;
-            background: #c0c0c0; border: 2px outset #fff;
-            font-size: 18px; cursor: pointer;
-        }
-        .admin-btn:active { border-style: inset; }
-        body.admin-mode .admin-btn { background: #ffff00; }
-
-        /* ── Edit Overlay ── */
-        .edit-overlay {
-            display: none;
-            position: absolute; inset: 0;
-            background: rgba(0,0,128,0.85);
-            flex-direction: column;
-            align-items: center; justify-content: center;
-            gap: 6px; z-index: 10; padding: 10px;
-        }
-        body.admin-mode .edit-overlay { display: flex; }
-
-        .edit-overlay button {
-            padding: 6px 10px; border: 2px outset #fff;
-            background: #c0c0c0; color: #000;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 7px; cursor: pointer; width: 130px;
-        }
-        .edit-overlay button:active { border-style: inset; }
-        .edit-overlay .btn-del { background: #ff0000; color: #fff; border-color: #ff6666; }
-
-        /* ── Modal (Win95) ── */
-        .modal-bg {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4); z-index: 2000;
-            align-items: center; justify-content: center;
-        }
-        .modal-bg.show { display: flex; }
-
-        .modal-win {
-            background: #c0c0c0; border: 2px outset #fff;
-            width: 90%; max-width: 360px;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.4);
-        }
-        .modal-titlebar {
-            background: linear-gradient(90deg, #000080, #1084d0);
-            color: #fff; padding: 3px 6px;
-            font-family: 'Press Start 2P', monospace; font-size: 8px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .modal-close {
-            background: #c0c0c0; border: 2px outset #fff;
-            width: 16px; height: 14px; font-size: 9px;
-            cursor: pointer; text-align: center; line-height: 10px;
-            font-weight: bold;
-        }
-        .modal-close:active { border-style: inset; }
-
-        .modal-body { padding: 12px; }
-        .modal-body label {
-            display: block; font-size: 11px; font-weight: bold;
-            margin-bottom: 3px; color: #000;
-        }
-        .modal-body input, .modal-body textarea {
-            width: 100%; padding: 4px 6px;
-            border: 2px inset #808080; background: #fff;
-            font-size: 12px; font-family: 'Comic Neue', cursive;
-            margin-bottom: 10px; outline: none;
-        }
-        .modal-body textarea { resize: vertical; min-height: 44px; }
-
-        .modal-actions {
-            display: flex; gap: 6px; justify-content: flex-end;
-            padding: 0 12px 10px;
-        }
-        .modal-actions button {
-            padding: 5px 18px; border: 2px outset #fff;
-            background: #c0c0c0; font-family: 'Press Start 2P', monospace;
-            font-size: 7px; cursor: pointer;
-        }
-        .modal-actions button:active { border-style: inset; }
-
-        /* ── Status bar ── */
-        .statusbar {
-            border-top: 2px inset #808080;
-            padding: 3px 8px;
-            font-size: 10px; color: #333;
-            display: flex; justify-content: space-between;
-        }
-        .statusbar a { color: #0000ff; }
-
-        /* ── Sparkle ── */
-        .sparkle {
-            position: fixed; pointer-events: none;
-            font-size: 12px; z-index: 9999;
-            animation: sparkfade 0.6s forwards;
-        }
-        @keyframes sparkfade {
-            0% { opacity:1; transform: scale(1) translateY(0); }
-            100% { opacity:0; transform: scale(0.2) translateY(-20px); }
-        }
-
-        /* ── Responsive ── */
-        @media (max-width: 600px) {
-            .card { width: 200px; }
-            .card-img { height: 110px; }
-            .desktop { padding: 8px; }
-            .slider-btn { display: none; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZAYBALNOMA — @badselect</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --panel:#c0c0c0; --card:#ffffff; --text:#000000; --link:#0000ee; --vlink:#551a8b; --hi:#ff00ff; --slot:#e6e6e6; --lite:#ffffff; --dark:#808080; --head:#000080; --red:#cc0000; --adm:#ffff66;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{--bg:#101018;--panel:#3a3a4a;--card:#22222e;--text:#f2f2ff;--link:#7fd4ff;--vlink:#d9a0ff;--hi:#ff7bff;--slot:#2e2e42;--lite:#6a6a80;--dark:#111118;--head:#2a2a90;--red:#ff7777;--adm:#665500;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:14px 10px 30px;background:var(--bg);color:var(--text);font-family:"Times New Roman",Times,serif;font-size:17px;line-height:1.4}
+a{color:var(--link)} a:visited{color:var(--vlink)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px dotted var(--hi);outline-offset:2px}
+.page{max-width:980px;margin:0 auto;border:4px ridge var(--dark);padding:12px;background:var(--bg)}
+.marquee{background:#000;color:#0f0;font-family:"Courier New",monospace;border:2px inset var(--dark);overflow:hidden;white-space:nowrap;padding:3px 0}
+.marquee span{display:inline-block;padding-left:100%;animation:scroll 20s linear infinite}
+@keyframes scroll{to{transform:translateX(-100%)}}
+@keyframes blink{50%{visibility:hidden}}
+.blink{animation:blink 1s steps(1) infinite;color:var(--red);font-weight:bold}
+@media (prefers-reduced-motion:reduce){.marquee span{animation:none;padding-left:6px}.blink{animation:none}}
+h1{font-family:Impact,"Arial Black",sans-serif;font-weight:900;font-size:clamp(2.4rem,12vw,5.6rem);line-height:1;margin:14px 0 6px;text-align:center;letter-spacing:.02em;word-break:break-word;color:#cc0000;background:linear-gradient(90deg,#e00000,#ff8800,#e6c800,#00aa33,#0000dd,#8800cc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(3px 3px 0 #000)}
+.sub{text-align:center;margin:0 0 8px;font-size:1.15rem}
+.sub a{font-weight:bold}
+hr.rainbow{border:0;height:6px;margin:12px 0;background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,magenta)}
+.bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center}
+.btn{font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;font-size:.9rem;background:var(--panel);color:var(--text);border:3px outset var(--lite);padding:3px 10px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:active{border-style:inset}
+.btn.big{font-size:1.05rem;padding:6px 16px;font-weight:bold}
+.btn.red{color:var(--red)}
+.toc{font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;text-align:center;margin:6px 0}
+.adm{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--adm);color:var(--text);border:3px outset var(--lite);padding:6px 8px;margin-bottom:10px;font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;font-size:.9rem}
+.adm b{display:block;margin-bottom:4px}
+.adm .bar{justify-content:flex-start}
+.month{margin:18px 0}
+.mh{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--head);color:#fff;border:3px outset var(--lite);padding:4px 10px}
+.mh h2{font-family:Impact,"Arial Black",sans-serif;font-weight:400;font-size:clamp(1.5rem,6vw,2.3rem);margin:0;letter-spacing:.03em;flex:1 1 auto;min-width:0;word-break:break-word}
+.mh .cnt{font-family:"Courier New",monospace;font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:12px}
+.card{background:var(--card);border:3px outset var(--lite);padding:6px;display:flex;flex-direction:column;gap:6px}
+.slot{all:unset;display:block;aspect-ratio:4/5;width:100%;background:var(--slot);border:2px inset var(--dark);position:relative;overflow:hidden}
+button.slot{cursor:pointer}
+.slot img{width:100%;height:100%;object-fit:cover;display:block}
+.slot .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:8px;font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;font-size:.85rem;color:var(--dark)}
+.slot .ph b{font-size:1.8rem;line-height:1}
+.cap{font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;font-weight:bold;font-size:.95rem;word-break:break-word}
+.desc{font-size:.9rem;word-break:break-word}
+.tools{display:flex;flex-wrap:wrap;gap:4px}
+.tools .btn{font-size:.75rem;padding:1px 6px}
+.addcard{border:3px dashed var(--dark);background:transparent;color:var(--text);font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;font-size:1rem;font-weight:bold;cursor:pointer;min-height:140px}
+.addcard:hover{color:var(--hi);border-color:var(--hi)}
+.counter{display:inline-block;background:#000;color:#0f0;font-family:"Courier New",monospace;letter-spacing:.2em;padding:2px 8px;border:2px inset var(--dark)}
+footer{text-align:center;font-size:.95rem;margin-top:16px}
+footer p{margin:6px 0}
+.empty{font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;text-align:center;padding:30px}
+dialog{border:4px outset var(--lite);background:var(--panel);color:var(--text);font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;padding:14px;width:min(560px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h3{margin:0 0 8px}
+dialog label{display:block;margin:6px 0 2px;font-size:.9rem}
+dialog input,dialog textarea{width:100%;font:inherit;font-size:.95rem;padding:4px;border:2px inset var(--dark);background:#fff;color:#000}
+dialog textarea{height:220px;font-family:"Courier New",monospace;font-size:.8rem}
+dialog .bar{justify-content:flex-end;margin-top:10px}
+</style>
 </head>
 <body>
-
-<!-- Win95 Taskbar -->
-<div class="taskbar">
-    <div class="start-btn" onclick="toggleAdmin()">⚙ Admin</div>
-    <div class="taskbar-title">ZAYBALNOMA 2026 — @badselect</div>
-    <div class="taskbar-time" id="clock">00:00</div>
+<div class="page">
+  <div class="marquee" aria-hidden="true"><span id="mq"></span></div>
+  <h1 id="ttl">ZAYBALNOMA</h1>
+  <p class="sub" id="sub"></p>
+  <hr class="rainbow">
+  <div id="admbar"></div>
+  <div class="toc" id="toc"></div>
+  <hr class="rainbow">
+  <main id="app"></main>
+  <hr class="rainbow">
+  <footer>
+    <p>Sizning mehmon raqami: <span class="counter" id="ctr">000001</span></p>
+    <p id="flink"></p>
+    <p id="ftxt"></p>
+    <p><a href="#admin" id="adminlink" data-a="toggleadmin">admin</a></p>
+  </footer>
 </div>
-
-<!-- Desktop -->
-<div class="desktop">
-
-<!-- Main Window -->
-<div class="main-window">
-    <div class="win-titlebar">
-        <span>📂 ZAYBALNOMA.exe</span>
-        <div class="win-buttons">
-            <div class="win-btn">_</div>
-            <div class="win-btn">□</div>
-            <div class="win-btn">X</div>
-        </div>
-    </div>
-    <div class="win-body">
-
-        <!-- Header -->
-        <div class="header-area">
-            <h1>★ ZAYBALNOMA ★</h1>
-            <p class="powered">🔥 Powered by <a href="#">@badselect</a> 🔥</p>
-            <div class="visitor">👁 004,829</div>
-            <div class="construction">🚧 Rasmlar tez orada! 🚧</div>
-        </div>
-
-        <!-- ═══ SENTABR ═══ -->
-        <section class="month-section" data-month="sentabr">
-            <div class="month-groupbox">
-                <span class="month-label"><span class="emoji">🍂</span> SENTABR [3]</span>
-                <div class="slider-wrap">
-                    <button class="slider-btn left" onclick="slide(this,-1)">◀</button>
-                    <div class="slider-track">
-
-                        <div class="card" data-id="s1">
-                            <div class="edit-overlay">
-                                <button onclick="pickImage(this)">📷 RASM</button>
-                                <button onclick="editCard(this)">✏ TAHRIR</button>
-                                <button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button>
-                            </div>
-                            <div class="card-bar"><span>iPhone 18</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">📱</span></div>
-                                <div class="card-body">
-                                    <span class="card-tag t-tech">TECH</span>
-                                    <span class="hot-badge">NEW!</span>
-                                    <div class="card-title">iPhone 18 (+Duo)</div>
-                                    <div class="card-desc">Apple'ning yangi flagman smartfoni va Duo varianti</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="s2">
-                            <div class="edit-overlay">
-                                <button onclick="pickImage(this)">📷 RASM</button>
-                                <button onclick="editCard(this)">✏ TAHRIR</button>
-                                <button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button>
-                            </div>
-                            <div class="card-bar"><span>Pedofilik</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">⚠️</span></div>
-                                <div class="card-body">
-                                    <span class="card-tag t-misc">SKANDAL</span>
-                                    <div class="card-title">Pedofilik</div>
-                                    <div class="card-desc">Jamiyatni larzaga solgan voqea</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="s3">
-                            <div class="edit-overlay">
-                                <button onclick="pickImage(this)">📷 RASM</button>
-                                <button onclick="editCard(this)">✏ TAHRIR</button>
-                                <button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button>
-                            </div>
-                            <div class="card-bar"><span>Zeekr</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🚗</span></div>
-                                <div class="card-body">
-                                    <span class="card-tag t-auto">AVTO</span>
-                                    <div class="card-title">52K$ Zeekr</div>
-                                    <div class="card-desc">52 ming dollarlik Zeekr elektromobili</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <button class="slider-btn right" onclick="slide(this,1)">▶</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══ OKTYABR ═══ -->
-        <section class="month-section" data-month="oktyabr">
-            <div class="month-groupbox">
-                <span class="month-label"><span class="emoji">🎃</span> OKTYABR [7]</span>
-                <div class="slider-wrap">
-                    <button class="slider-btn left" onclick="slide(this,-1)">◀</button>
-                    <div class="slider-track">
-
-                        <div class="card" data-id="o1">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Centrum Air</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">💨</span></div>
-                                <div class="card-body"><span class="card-tag t-tech">TECH</span><div class="card-title">Centrum Air</div><div class="card-desc">Centrum'ning yangi havo qurilmasi</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="o2">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>MrBeast</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🎬</span></div>
-                                <div class="card-body"><span class="card-tag t-media">MEDIA</span><div class="card-title">MrBeast</div><div class="card-desc">MrBeast bilan bog'liq voqealar</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="o3">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Brasserie</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🍽️</span></div>
-                                <div class="card-body"><span class="card-tag t-food">OSHXONA</span><div class="card-title">Brasserie</div><div class="card-desc">Brasserie restoran/kafelari haqida</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="o4">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Ozodbek D.</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🎵</span></div>
-                                <div class="card-body"><span class="card-tag t-culture">MADANIYAT</span><span class="hot-badge">HOT!</span><div class="card-title">10 minut uxlayman deb 15 minut</div><div class="card-desc">Ozodbek Davlatov — mashhur qo'shiq/trend</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="o5">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Yangi Alifbo</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🔤</span></div>
-                                <div class="card-body"><span class="card-tag t-culture">MADANIYAT</span><div class="card-title">Yangi Alifbo</div><div class="card-desc">O'zbek tilining yangi alifbosiga o'tish</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="o6">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>ImanInvest</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">💰</span></div>
-                                <div class="card-body"><span class="card-tag t-finance">MOLIYA</span><div class="card-title">ImanInvest</div><div class="card-desc">Islomiy investitsiya platformasi</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="o7">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Apple Pay</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">💳</span></div>
-                                <div class="card-body"><span class="card-tag t-tech">TECH</span><div class="card-title">Apple Pay</div><div class="card-desc">Google Wallet haqida hech kim gapirmadi 😅</div></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <button class="slider-btn right" onclick="slide(this,1)">▶</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══ NOYABR ═══ -->
-        <section class="month-section" data-month="noyabr">
-            <div class="month-groupbox">
-                <span class="month-label"><span class="emoji">❄️</span> NOYABR [4]</span>
-                <div class="slider-wrap">
-                    <button class="slider-btn left" onclick="slide(this,-1)">◀</button>
-                    <div class="slider-track">
-
-                        <div class="card" data-id="n1">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Imarat Dev</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🏗️</span></div>
-                                <div class="card-body"><span class="card-tag t-finance">BIZNES</span><div class="card-title">Marat (Imarat Development)</div><div class="card-desc">Imarat Development va Marat bilan bog'liq voqealar</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="n2">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Rasmdagilar</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🖼️</span></div>
-                                <div class="card-body"><span class="card-tag t-culture">MADANIYAT</span><div class="card-title">Rasmdagilarni taniysizmi?</div><div class="card-desc">MrBeast va Said Ahmad — kutilmagan juftlik</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="n3">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>GTA VI</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🎮</span></div>
-                                <div class="card-body"><span class="card-tag t-gaming">GAMING</span><span class="hot-badge">HOT!</span><div class="card-title"><span class="fire">GTA VI</span></div><div class="card-desc">Rockstar Games'ning eng kutilgan o'yini</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="n4">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Kinder</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🍫</span></div>
-                                <div class="card-body"><span class="card-tag t-brend">BREND</span><div class="card-title">Kinder</div><div class="card-desc">Kinder bilan bog'liq voqealar</div></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <button class="slider-btn right" onclick="slide(this,1)">▶</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══ HONORABLE MENTIONS ═══ -->
-        <section class="month-section honor" data-month="honor">
-            <div class="month-groupbox">
-                <span class="month-label"><span class="emoji">🏆</span> HONORABLE MENTIONS</span>
-                <div class="slider-wrap">
-                    <button class="slider-btn left" onclick="slide(this,-1)">◀</button>
-                    <div class="slider-track">
-
-                        <div class="card" data-id="h1">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>Z avlod</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">📺</span></div>
-                                <div class="card-body"><span class="card-tag t-media">KONTENT</span><div class="card-title">Z avlod deb kontent oladiganlar</div><div class="card-desc">"Z avlod" nomi ostida kontent ishlab chiqaruvchilar</div></div>
-                            </div>
-                        </div>
-
-                        <div class="card" data-id="h2">
-                            <div class="edit-overlay"><button onclick="pickImage(this)">📷 RASM</button><button onclick="editCard(this)">✏ TAHRIR</button><button class="btn-del" onclick="deleteCard(this)">🗑 O'CHIR</button></div>
-                            <div class="card-bar"><span>The Odyssey</span><div class="card-bar-btns"><span class="card-bar-btn">_</span><span class="card-bar-btn">X</span></div></div>
-                            <div class="card-inner">
-                                <div class="card-img"><span class="ph">🎥</span></div>
-                                <div class="card-body"><span class="card-tag t-film">FILM</span><div class="card-title">The Odyssey</div><div class="card-desc">Christopher Nolan'ning yangi filmi</div></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <button class="slider-btn right" onclick="slide(this,1)">▶</button>
-                </div>
-            </div>
-        </section>
-
-    </div><!-- /win-body -->
-    <div class="statusbar">
-        <span>📧 <a href="#">@badselect</a></span>
-        <span>© 2026 ZAYBALNOMA</span>
-    </div>
-</div><!-- /main-window -->
-
-</div><!-- /desktop -->
-
-<!-- Admin Button -->
-<button class="admin-btn" onclick="toggleAdmin()" title="Admin">⚙</button>
-
-<!-- Hidden File Input -->
-<input type="file" id="fileInput" accept="image/*" style="display:none">
-
-<!-- Win95 Edit Modal -->
-<div class="modal-bg" id="editModal">
-    <div class="modal-win">
-        <div class="modal-titlebar">
-            <span>✏ Tahrirlash</span>
-            <div class="modal-close" onclick="closeModal()">X</div>
-        </div>
-        <div class="modal-body">
-            <label>Sarlavha:</label>
-            <input type="text" id="mTitle">
-            <label>Tavsif:</label>
-            <textarea id="mDesc"></textarea>
-            <label>Teg:</label>
-            <input type="text" id="mTag">
-        </div>
-        <div class="modal-actions">
-            <button onclick="closeModal()">BEKOR</button>
-            <button onclick="saveEdit()">OK</button>
-        </div>
-    </div>
-</div>
-
+<input type="file" accept="image/*" id="file" hidden>
+<input type="file" accept="application/json,.json" id="jfile" hidden>
+<dialog id="dlg"></dialog>
 <script>
-    let currentCard = null;
-
-    // Clock
-    function updateClock() {
-        const d = new Date();
-        document.getElementById('clock').textContent =
-            d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
-    }
-    updateClock(); setInterval(updateClock, 30000);
-
-    // Admin
-    function toggleAdmin() { document.body.classList.toggle('admin-mode'); }
-
-    // Slider
-    function slide(btn, dir) {
-        const track = btn.parentElement.querySelector('.slider-track');
-        const w = track.querySelector('.card').offsetWidth + 8;
-        track.scrollBy({ left: dir * w, behavior: 'smooth' });
-    }
-
-    // Image
-    function pickImage(btn) {
-        currentCard = btn.closest('.card');
-        document.getElementById('fileInput').click();
-    }
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-        if (!currentCard || !e.target.files[0]) return;
-        const r = new FileReader();
-        r.onload = function(ev) {
-            currentCard.querySelector('.card-img').innerHTML = '<img src="'+ev.target.result+'">';
-            saveAll();
-        };
-        r.readAsDataURL(e.target.files[0]);
-        e.target.value = '';
-    });
-
-    // Edit
-    function editCard(btn) {
-        currentCard = btn.closest('.card');
-        document.getElementById('mTitle').value = currentCard.querySelector('.card-title').textContent;
-        document.getElementById('mDesc').value = currentCard.querySelector('.card-desc').textContent;
-        document.getElementById('mTag').value = currentCard.querySelector('.card-tag').textContent;
-        document.getElementById('editModal').classList.add('show');
-    }
-    function closeModal() { document.getElementById('editModal').classList.remove('show'); currentCard = null; }
-    function saveEdit() {
-        if (!currentCard) return;
-        currentCard.querySelector('.card-title').textContent = document.getElementById('mTitle').value;
-        currentCard.querySelector('.card-desc').textContent = document.getElementById('mDesc').value;
-        currentCard.querySelector('.card-tag').textContent = document.getElementById('mTag').value;
-        closeModal(); saveAll();
-    }
-
-    // Delete
-    function deleteCard(btn) {
-        if (confirm("Kartani o'chirishni xohlaysizmi?")) { btn.closest('.card').remove(); saveAll(); }
-    }
-
-    // localStorage
-    function saveAll() {
-        const data = {};
-        document.querySelectorAll('.card').forEach(c => {
-            const img = c.querySelector('.card-img img');
-            data[c.dataset.id] = {
-                t: c.querySelector('.card-title').textContent,
-                d: c.querySelector('.card-desc').textContent,
-                g: c.querySelector('.card-tag').textContent,
-                i: img ? img.src : null
-            };
-        });
-        localStorage.setItem('zaybal95', JSON.stringify(data));
-    }
-    function loadAll() {
-        try {
-            const data = JSON.parse(localStorage.getItem('zaybal95'));
-            if (!data) return;
-            Object.keys(data).forEach(id => {
-                const c = document.querySelector('[data-id="'+id+'"]');
-                if (!c) return;
-                c.querySelector('.card-title').textContent = data[id].t;
-                c.querySelector('.card-desc').textContent = data[id].d;
-                c.querySelector('.card-tag').textContent = data[id].g;
-                if (data[id].i) c.querySelector('.card-img').innerHTML = '<img src="'+data[id].i+'">';
-            });
-        } catch(e) {}
-    }
-
-    document.getElementById('editModal').addEventListener('click', function(e) { if (e.target===this) closeModal(); });
-
-    // Sparkles
-    const sp = ['✨','⭐','💫'];
-    document.addEventListener('mousemove', e => {
-        if (Math.random()>0.9) {
-            const s = document.createElement('span');
-            s.className='sparkle'; s.textContent=sp[Math.floor(Math.random()*sp.length)];
-            s.style.left=e.pageX+'px'; s.style.top=e.pageY+'px';
-            document.body.appendChild(s);
-            setTimeout(()=>s.remove(),600);
-        }
-    });
-
-    loadAll();
+var DEFAULT={
+ site:{title:"ZAYBALNOMA",sub:"powered by",handle:"@badselect",link:"https://t.me/badselect",marquee:"*** Xush kelibsiz! ZAYBALNOMA — oy-oy bo‘yicha eng zo‘r zaybal voqealar *** Telegram: @badselect ***",footer:"Best viewed in Netscape Navigator 4.0 · 800x600"},
+ months:[
+  {id:"sentabr",title:"Sentabr",items:["iPhone 18(+Duo)","Pedofilik","52K$ Zeekr"]},
+  {id:"oktyabr",title:"Oktyabr",items:["Centrum air","Mrbeast","Brasserie","10 minut uxlayman deb 15 minut (Ozodbek Davlatov)","Yangi Alifbo","ImanInvest","Apple pay (google wallet haqida hech kim gapirmadiyam)"]},
+  {id:"noyabr",title:"Noyabr",items:["Marat (Imarat Development)","Rasmdagilarni taniysizmi? (Mrbest va Said Ahmad)","GTA VI","Kinder"]},
+  {id:"honor",title:"Honorable mentions",items:["Z avlod deb kontent oladiganlar","The Odyssey"]}
+ ].map(function(m){return{id:m.id,title:m.title,items:m.items.map(function(t,i){return{id:m.id+"-"+i,t:t,d:"",img:""}})}})
+};
+var K3="zaybalnoma:v3",K2="zaybalnoma:v2",KC="zaybalnoma:hits";
+var data=null,draft=null,admin=false,pending=null;
+function uid(){return"x"+Math.random().toString(36).slice(2,9)}
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function safeUrl(u){return /^https?:\/\//i.test(u)?u:"#"}
+function safeImg(u){u=String(u||"");return(/^(data:image\/|https?:\/\/|[\w.\/-]+$)/i.test(u))?u:""}
+function valid(j){return j&&typeof j==="object"&&Array.isArray(j.months)&&j.site&&typeof j.site==="object"}
+try{var s3=localStorage.getItem(K3);if(s3){var o=JSON.parse(s3);if(valid(o))draft=o}}catch(e){}
+if(!draft){
+  try{var s2=JSON.parse(localStorage.getItem(K2)||"null");
+    if(s2&&Array.isArray(s2.months)){
+      var d=JSON.parse(JSON.stringify(DEFAULT));d.months=s2.months.map(function(m){return{id:m.id,title:m.title,items:m.items.map(function(it){return{id:it.id,t:it.t,d:"",img:(s2.imgs&&s2.imgs[it.id])||""}})}});
+      draft=d;
+    }}catch(e){}
+}
+data=draft||JSON.parse(JSON.stringify(DEFAULT));
+function commit(){draft=data;try{localStorage.setItem(K3,JSON.stringify(data))}catch(e){alert("Xotira to‘ldi. Rasmlarni kamaytiring yoki rasm yo‘lidan foydalaning.")}}
+function find(id){return data.months.filter(function(m){return m.id===id})[0]}
+function findItem(m,id){return m.items.filter(function(x){return x.id===id})[0]}
+function move(arr,item,dir){var i=arr.indexOf(item),j=i+dir;if(j<0||j>=arr.length)return;arr[i]=arr[j];arr[j]=item}
+function renderTop(){
+  var s=data.site;
+  document.title=s.title+" — "+s.handle;
+  document.getElementById("mq").textContent=s.marquee;
+  document.getElementById("ttl").textContent=s.title;
+  document.getElementById("sub").innerHTML=esc(s.sub)+' <a href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener">'+esc(s.handle)+'</a> <span class="blink">NEW!</span>';
+  document.getElementById("flink").innerHTML='Kanalimiz: <a href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener">'+esc(s.link.replace(/^https?:\/\//,""))+'</a>';
+  document.getElementById("ftxt").textContent=s.footer;
+  document.getElementById("toc").innerHTML=data.months.length?"Bo‘limlar: "+data.months.map(function(m){return'<a href="#m-'+m.id+'" data-go="'+m.id+'">'+esc(m.title)+'</a>'}).join(" | "):"";
+  document.getElementById("admbar").innerHTML=admin?
+   '<div class="adm"><b>ADMIN REJIMI'+(draft?' — qoralama shu brauzerda saqlangan':'')+'</b><div class="bar">'+
+   '<button class="btn" data-a="site" type="button">Sayt matnlari</button>'+
+   '<button class="btn" data-a="addmonth" type="button">+ Yangi oy</button>'+
+   '<button class="btn" data-a="export" type="button">data.json olish</button>'+
+   '<button class="btn" data-a="import" type="button">data.json yuklash</button>'+
+   '<button class="btn red" data-a="reset" type="button">Qoralamani tashlash</button>'+
+   '<button class="btn" data-a="toggleadmin" type="button">Chiqish</button></div></div>':'';
+}
+function render(){
+  renderTop();
+  var app=document.getElementById("app");
+  if(!data.months.length){app.innerHTML='<p class="empty">Hozircha hech narsa yo‘q.</p>';return}
+  app.innerHTML=data.months.map(function(m){
+    var cards=m.items.map(function(it){
+      var img=safeImg(it.img);
+      var inner=img?'<img src="'+esc(img)+'" alt="'+esc(it.t)+'">':'<span class="ph"><b>'+(admin?'[ + ]':'?')+'</b><span>'+(admin?'Rasm qo’shish':'Rasm yo‘q')+'</span></span>';
+      var slot=admin?'<button class="slot" data-a="pick" data-m="'+m.id+'" data-id="'+it.id+'" aria-label="'+esc(it.t)+': rasm tanlash">'+inner+'</button>':'<div class="slot">'+inner+'</div>';
+      var tools=admin?'<div class="tools">'+
+        '<button class="btn" data-a="rename" data-m="'+m.id+'" data-id="'+it.id+'" type="button">Nomi</button>'+
+        '<button class="btn" data-a="desc" data-m="'+m.id+'" data-id="'+it.id+'" type="button">Izoh</button>'+
+        '<button class="btn" data-a="imgpath" data-m="'+m.id+'" data-id="'+it.id+'" type="button">Rasm yo’li</button>'+
+        (img?'<button class="btn" data-a="rmimg" data-m="'+m.id+'" data-id="'+it.id+'" type="button">Rasmni olib tashlash</button>':'')+
+        '<button class="btn" data-a="cleft" data-m="'+m.id+'" data-id="'+it.id+'" type="button" aria-label="Oldinga">←</button>'+
+        '<button class="btn" data-a="cright" data-m="'+m.id+'" data-id="'+it.id+'" type="button" aria-label="Orqaga">→</button>'+
+        '<button class="btn red" data-a="delcard" data-m="'+m.id+'" data-id="'+it.id+'" type="button">O’chirish</button></div>':'';
+      return'<div class="card">'+slot+'<div class="cap">'+esc(it.t)+'</div>'+(it.d?'<div class="desc">'+esc(it.d)+'</div>':'')+tools+'</div>';
+    }).join("");
+    var mtools=admin?'<button class="btn" data-a="mup" data-m="'+m.id+'" type="button" aria-label="Yuqoriga">↑</button><button class="btn" data-a="mdown" data-m="'+m.id+'" type="button" aria-label="Pastga">↓</button><button class="btn" data-a="renmonth" data-m="'+m.id+'" type="button">Nomi</button><button class="btn red" data-a="delmonth" data-m="'+m.id+'" type="button">O’chirish</button>':'';
+    return'<section class="month" id="m-'+m.id+'"><div class="mh"><h2>'+esc(m.title)+'</h2><span class="cnt">['+m.items.length+' ta]</span>'+mtools+'</div>'+
+      '<div class="grid">'+cards+(admin?'<button class="addcard" data-a="addcard" data-m="'+m.id+'" type="button">+ Yangi kartochka</button>':'')+'</div></section>';
+  }).join("");
+}
+function shrink(file,cb){
+  var r=new FileReader();
+  r.onload=function(){var im=new Image();im.onload=function(){
+    var sc=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement("canvas");
+    c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);
+    c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};im.src=r.result};
+  r.readAsDataURL(file);
+}
+function dialog(html,onOpen){var d=document.getElementById("dlg");d.innerHTML=html;if(!d.open)d.showModal();if(onOpen)onOpen(d);return d}
+function closeDlg(){var d=document.getElementById("dlg");if(d.open)d.close()}
+function siteDialog(){
+  var s=data.site,f=[["title","Sarlavha"],["sub","Sarlavha ostidagi matn"],["handle","Kanal nomi (@...)"],["link","Kanal havolasi (https://...)"],["marquee","Yugurib o‘tadigan yozuv"],["footer","Pastki yozuv"]];
+  dialog('<h3>Sayt matnlari</h3>'+f.map(function(x){return'<label for="f-'+x[0]+'">'+x[1]+'</label><input id="f-'+x[0]+'" value="'+esc(s[x[0]])+'">'}).join("")+
+   '<div class="bar"><button class="btn" id="dcancel" type="button">Bekor</button><button class="btn big" id="dsave" type="button">Saqlash</button></div>',function(){
+    document.getElementById("dcancel").onclick=closeDlg;
+    document.getElementById("dsave").onclick=function(){f.forEach(function(x){s[x[0]]=document.getElementById("f-"+x[0]).value});commit();closeDlg();render()};
+  });
+}
+function exportDialog(){
+  var json=JSON.stringify(data,null,2);
+  dialog('<h3>data.json</h3><p style="margin:0 0 6px;font-size:.9rem">Shu matnni nusxalab GitHub’dagi <b>data.json</b> fayliga qo‘ying (yoki yuklab oling).</p><textarea id="jt" readonly></textarea>'+
+   '<div class="bar"><button class="btn" id="dcopy" type="button">Nusxalash</button><button class="btn" id="ddl" type="button">Yuklab olish</button><button class="btn big" id="dclose" type="button">Yopish</button></div>',function(){
+    var t=document.getElementById("jt");t.value=json;
+    document.getElementById("dclose").onclick=closeDlg;
+    document.getElementById("dcopy").onclick=function(){t.select();try{navigator.clipboard.writeText(json)}catch(e){try{document.execCommand("copy")}catch(x){}}};
+    document.getElementById("ddl").onclick=function(){try{var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([json],{type:"application/json"}));a.download="data.json";document.body.appendChild(a);a.click();a.remove()}catch(e){}};
+  });
+}
+function setAdmin(v){admin=v;try{sessionStorage.setItem("zay:admin",v?"1":"")}catch(e){}render()}
+document.addEventListener("click",function(e){
+  var g=e.target.closest("a[data-go]");
+  if(g){e.preventDefault();var el=document.getElementById("m-"+g.dataset.go);if(el)el.scrollIntoView({behavior:"smooth"});return}
+  var b=e.target.closest("[data-a]");if(!b)return;
+  var a=b.dataset.a,m=b.dataset.m?find(b.dataset.m):null,it=(m&&b.dataset.id)?findItem(m,b.dataset.id):null,v;
+  if(a==="toggleadmin"){e.preventDefault();setAdmin(!admin);return}
+  if(!admin)return;
+  if(a==="pick"){pending={m:m.id,id:it.id};document.getElementById("file").click();return}
+  if(a==="site"){siteDialog();return}
+  if(a==="addmonth"){v=prompt("Oy (yoki bo’lim) nomi:");if(v&&v.trim()){var n={id:uid(),title:v.trim(),items:[]};data.months.push(n);commit();render();var el=document.getElementById("m-"+n.id);if(el)el.scrollIntoView()}return}
+  if(a==="export"){exportDialog();return}
+  if(a==="import"){document.getElementById("jfile").click();return}
+  if(a==="reset"){if(confirm("Qoralama o’chiriladi va saytdagi e’lon qilingan holat ko’rsatiladi. Davom etasizmi?")){try{localStorage.removeItem(K3)}catch(x){}draft=null;loadPublished(true)}return}
+  if(a==="renmonth"){v=prompt("Yangi nom:",m.title);if(v&&v.trim()){m.title=v.trim();commit();render()}return}
+  if(a==="mup"){move(data.months,m,-1);commit();render();return}
+  if(a==="mdown"){move(data.months,m,1);commit();render();return}
+  if(a==="delmonth"){if(confirm("«"+m.title+"» va undagi hamma kartochkalar o’chiriladi. Davom etasizmi?")){data.months=data.months.filter(function(x){return x!==m});commit();render()}return}
+  if(a==="addcard"){v=prompt("Kartochka nomi:");if(v&&v.trim()){m.items.push({id:uid(),t:v.trim(),d:"",img:""});commit();render()}return}
+  if(a==="rename"){v=prompt("Yangi nom:",it.t);if(v&&v.trim()){it.t=v.trim();commit();render()}return}
+  if(a==="desc"){v=prompt("Izoh (bo’sh qoldirsangiz o’chadi):",it.d||"");if(v!==null){it.d=v.trim();commit();render()}return}
+  if(a==="imgpath"){v=prompt("Rasm yo’li (masalan images/gta.jpg) yoki https:// havola:",/^data:/.test(it.img||"")?"":(it.img||""));if(v!==null){it.img=safeImg(v.trim());commit();render()}return}
+  if(a==="rmimg"){it.img="";commit();render();return}
+  if(a==="cleft"){move(m.items,it,-1);commit();render();return}
+  if(a==="cright"){move(m.items,it,1);commit();render();return}
+  if(a==="delcard"){if(confirm("Kartochka o’chirilsinmi?")){m.items=m.items.filter(function(x){return x!==it});commit();render()}return}
+});
+document.getElementById("file").addEventListener("change",function(e){
+  var f=e.target.files[0];e.target.value="";if(!f||!pending)return;
+  var p=pending,m=find(p.m),it=m&&findItem(m,p.id);if(!it)return;
+  shrink(f,function(d){it.img=d;commit();render()});
+});
+document.getElementById("jfile").addEventListener("change",function(e){
+  var f=e.target.files[0];e.target.value="";if(!f)return;
+  var r=new FileReader();r.onload=function(){try{var j=JSON.parse(r.result);if(!valid(j))throw 0;data=j;commit();render()}catch(x){alert("Bu to’g’ri data.json emas.")}};r.readAsText(f);
+});
+function loadPublished(force){
+  fetch("data.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    if(!valid(j))throw 0;
+    if(force||!draft){data=j;render()}
+  }).catch(function(){if(force){data=JSON.parse(JSON.stringify(DEFAULT));render()}});
+}
+var hits=1;
+try{hits=(parseInt(localStorage.getItem(KC),10)||0)+1;localStorage.setItem(KC,hits)}catch(e){}
+document.getElementById("ctr").textContent=("000000"+hits).slice(-6);
+try{admin=sessionStorage.getItem("zay:admin")==="1"}catch(e){}
+if(location.hash==="#admin")admin=true;
+render();
+loadPublished(false);
 </script>
-
 </body>
 </html>
