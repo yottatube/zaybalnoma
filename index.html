@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ZAYBALNOMA — @badselect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
 :root{
   box-sizing:border-box;
@@ -25,7 +27,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes blink{50%{visibility:hidden}}
 .blink{animation:blink 1s steps(1) infinite;color:var(--red);font-weight:bold}
 @media (prefers-reduced-motion:reduce){.marquee span{animation:none;padding-left:6px}.blink{animation:none}}
-h1{font-family:Impact,"Arial Black",sans-serif;font-weight:900;font-size:clamp(2.4rem,12vw,5.6rem);line-height:1;margin:14px 0 6px;text-align:center;letter-spacing:.02em;word-break:break-word;color:#cc0000;background:linear-gradient(90deg,#e00000,#ff8800,#e6c800,#00aa33,#0000dd,#8800cc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(3px 3px 0 #000)}
+@keyframes cyc{0%{color:#ff2d95}20%{color:#ff9500}40%{color:#e6c800}60%{color:#16b84a}80%{color:#1e90ff}100%{color:#9b30ff}}
+h1{font-family:"Press Start 2P","Courier New",monospace;font-weight:400;font-size:clamp(1.2rem,5.8vw,3.3rem);line-height:1.3;margin:18px 0 10px;text-align:center;letter-spacing:.02em;word-break:break-word;color:#ff2d95;text-shadow:4px 4px 0 #000;animation:cyc 3.5s steps(1,end) infinite}
+@media (prefers-reduced-motion:reduce){h1{animation:none}}
+.top3{margin:10px 0 4px;border:3px ridge var(--dark);background:var(--card);padding:8px}
+.top3 h3{font-family:"Press Start 2P","Courier New",monospace;font-weight:400;font-size:.8rem;text-align:center;margin:2px 0 10px}
+.tops{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tp{flex:1 1 190px;max-width:300px;border:3px outset var(--lite);background:var(--head);color:#fff;display:flex;gap:8px;align-items:center;padding:6px}
+.tp .rk{font-family:"Press Start 2P","Courier New",monospace;font-size:1.4rem;min-width:2rem;text-align:center;text-shadow:2px 2px 0 #000}
+.r1 .rk{color:#ffcc00}.r2 .rk{color:#e0e0e0}.r3 .rk{color:#e08a30}
+.tp img{width:48px;height:60px;object-fit:cover;border:2px inset var(--dark);flex:none}
+.tp .tt{font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;font-weight:bold;font-size:.9rem;word-break:break-word}
 .sub{text-align:center;margin:0 0 8px;font-size:1.15rem}
 .sub a{font-weight:bold}
 hr.rainbow{border:0;height:6px;margin:12px 0;background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,magenta)}
@@ -59,11 +71,11 @@ button.slot{cursor:pointer}
 footer{text-align:center;font-size:.95rem;margin-top:16px}
 footer p{margin:6px 0}
 .empty{font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;text-align:center;padding:30px}
-dialog{border:4px outset var(--lite);background:var(--panel);color:var(--text);font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;padding:14px;width:min(560px,92vw)}
+dialog{max-height:90vh;overflow:auto;border:4px outset var(--lite);background:var(--panel);color:var(--text);font-family:"Comic Sans MS","Comic Neue",cursive,sans-serif;padding:14px;width:min(560px,92vw)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
 dialog h3{margin:0 0 8px}
 dialog label{display:block;margin:6px 0 2px;font-size:.9rem}
-dialog input,dialog textarea{width:100%;font:inherit;font-size:.95rem;padding:4px;border:2px inset var(--dark);background:#fff;color:#000}
+dialog input,dialog textarea,dialog select{width:100%;font:inherit;font-size:.95rem;padding:4px;border:2px inset var(--dark);background:#fff;color:#000}
 dialog textarea{height:220px;font-family:"Courier New",monospace;font-size:.8rem}
 dialog .bar{justify-content:flex-end;margin-top:10px}
 </style>
@@ -73,6 +85,7 @@ dialog .bar{justify-content:flex-end;margin-top:10px}
   <div class="marquee" aria-hidden="true"><span id="mq"></span></div>
   <h1 id="ttl">ZAYBALNOMA</h1>
   <p class="sub" id="sub"></p>
+  <div id="top3"></div>
   <hr class="rainbow">
   <div id="admbar"></div>
   <div class="toc" id="toc"></div>
@@ -118,6 +131,7 @@ function commit(){draft=data;try{localStorage.setItem(K3,JSON.stringify(data))}c
 function find(id){return data.months.filter(function(m){return m.id===id})[0]}
 function findItem(m,id){return m.items.filter(function(x){return x.id===id})[0]}
 function move(arr,item,dir){var i=arr.indexOf(item),j=i+dir;if(j<0||j>=arr.length)return;arr[i]=arr[j];arr[j]=item}
+function cardById(id){for(var i=0;i<data.months.length;i++){var it=findItem(data.months[i],id);if(it)return it}return null}
 function renderTop(){
   var s=data.site;
   document.title=s.title+" — "+s.handle;
@@ -126,10 +140,15 @@ function renderTop(){
   document.getElementById("sub").innerHTML=esc(s.sub)+' <a href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener">'+esc(s.handle)+'</a> <span class="blink">NEW!</span>';
   document.getElementById("flink").innerHTML='Kanalimiz: <a href="'+esc(safeUrl(s.link))+'" target="_blank" rel="noopener">'+esc(s.link.replace(/^https?:\/\//,""))+'</a>';
   document.getElementById("ftxt").textContent=s.footer;
+  var tp=data.top||[],th="";
+  for(var i=0;i<3;i++){var x=tp[i]||{},c=x.ref?cardById(x.ref):null,t=c?c.t:x.t,im=safeImg(c?c.img:x.img);
+    if(t)th+='<div class="tp r'+(i+1)+'"><span class="rk">'+(i+1)+'</span>'+(im?'<img src="'+esc(im)+'" alt="'+esc(t)+'">':'')+'<span class="tt">'+esc(t)+'</span></div>'}
+  document.getElementById("top3").innerHTML=th?'<div class="top3"><h3>★ TOP 3 ★</h3><div class="tops">'+th+'</div></div>':(admin?'<div class="top3"><h3>TOP 3</h3><p style="text-align:center;margin:0">Hali belgilanmagan. Admin paneldagi «Top 3» tugmasini bosing.</p></div>':'');
   document.getElementById("toc").innerHTML=data.months.length?"Bo‘limlar: "+data.months.map(function(m){return'<a href="#m-'+m.id+'" data-go="'+m.id+'">'+esc(m.title)+'</a>'}).join(" | "):"";
   document.getElementById("admbar").innerHTML=admin?
    '<div class="adm"><b>ADMIN REJIMI'+(draft?' — qoralama shu brauzerda saqlangan':'')+'</b><div class="bar">'+
    '<button class="btn" data-a="site" type="button">Sayt matnlari</button>'+
+   '<button class="btn" data-a="top3" type="button">Top 3</button>'+
    '<button class="btn" data-a="addmonth" type="button">+ Yangi oy</button>'+
    '<button class="btn" data-a="export" type="button">data.json olish</button>'+
    '<button class="btn" data-a="import" type="button">data.json yuklash</button>'+
@@ -178,6 +197,22 @@ function siteDialog(){
     document.getElementById("dsave").onclick=function(){f.forEach(function(x){s[x[0]]=document.getElementById("f-"+x[0]).value});commit();closeDlg();render()};
   });
 }
+function topDialog(){
+  var tp=data.top||[];
+  var opts='<option value="">— o‘zim yozaman —</option>'+data.months.map(function(m){return m.items.map(function(it){return'<option value="'+esc(it.id)+'">'+esc(m.title)+': '+esc(it.t)+'</option>'}).join("")}).join("");
+  var h='<h3>Top 3</h3>';
+  for(var i=0;i<3;i++){var x=tp[i]||{};
+    h+='<label for="tr'+i+'">'+(i+1)+'-o‘rin: kartochkadan tanlash</label><select id="tr'+i+'">'+opts+'</select>'+
+       '<label for="tt'+i+'">yoki o‘zingiz yozing (nomi)</label><input id="tt'+i+'" value="'+esc(x.t)+'">'+
+       '<label for="ti'+i+'">rasm yo‘li (ixtiyoriy, masalan images/a.jpg)</label><input id="ti'+i+'" value="'+esc(/^data:/.test(x.img||"")?"":x.img)+'">';}
+  dialog(h+'<div class="bar"><button class="btn" id="dcancel" type="button">Bekor</button><button class="btn big" id="dsave" type="button">Saqlash</button></div>',function(){
+    for(var i=0;i<3;i++){var sel=document.getElementById("tr"+i);sel.value=(tp[i]&&tp[i].ref)||"";if(sel.value!==((tp[i]&&tp[i].ref)||""))sel.value=""}
+    document.getElementById("dcancel").onclick=closeDlg;
+    document.getElementById("dsave").onclick=function(){
+      var out=[];for(var i=0;i<3;i++)out.push({ref:document.getElementById("tr"+i).value,t:document.getElementById("tt"+i).value.trim(),img:safeImg(document.getElementById("ti"+i).value.trim())});
+      data.top=out;commit();closeDlg();render()};
+  });
+}
 function exportDialog(){
   var json=JSON.stringify(data,null,2);
   dialog('<h3>data.json</h3><p style="margin:0 0 6px;font-size:.9rem">Shu matnni nusxalab GitHub’dagi <b>data.json</b> fayliga qo‘ying (yoki yuklab oling).</p><textarea id="jt" readonly></textarea>'+
@@ -198,6 +233,7 @@ document.addEventListener("click",function(e){
   if(!admin)return;
   if(a==="pick"){pending={m:m.id,id:it.id};document.getElementById("file").click();return}
   if(a==="site"){siteDialog();return}
+  if(a==="top3"){topDialog();return}
   if(a==="addmonth"){v=prompt("Oy (yoki bo’lim) nomi:");if(v&&v.trim()){var n={id:uid(),title:v.trim(),items:[]};data.months.push(n);commit();render();var el=document.getElementById("m-"+n.id);if(el)el.scrollIntoView()}return}
   if(a==="export"){exportDialog();return}
   if(a==="import"){document.getElementById("jfile").click();return}
